@@ -31,6 +31,8 @@ table{
   margin-left: 5em;
   border: 1px solid black;
   border-radius: 2.5em;
+  text-align: center;
+  height: 75%;
 }
 
 th{
@@ -39,4 +41,32 @@ th{
 
 td{
   padding: 0 2em 2em 2em;
+}
+
+#tempTitle {
+  /* display: flex; */
+  text-align: center;
+  margin-left: 1em;
+}
+
+#weather {
+  display: flex;
+  justify-content: space-around; 
+  /* align-content: space-around; */
+}
+
+#wCard {
+  margin: 0 auto;
+  padding: 1em;
+  border: 1px solid black;
+  border-radius: 2.5em;
+  height: auto;
+}
+
+#error {
+  margin: auto;
+  padding: 4em;
+  border: 1px solid black;
+  border-radius: 2.5em;
+  font-family: sans-serif;
 }

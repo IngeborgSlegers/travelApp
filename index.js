@@ -2,10 +2,12 @@ let cityUrl = "https://api.openaq.org/v1/cities?";
 let coordinatesUrl = "https://api.openaq.org/v1/measurements"; //add city
 let weatherUrl = "https://api.openweathermap.org/data/2.5/weather";
 let weatherAPI = "fd1e0f9cb7c1e3691424e0190d6ba6a5"
-let travelUrl = "http://partners.api.skyscanner.net/apiservices/browsequotes/v1.0/{country}/{currency}/{locale}/{originPlace}/{destinationPlace}/{outboundPartialDate}/{inboundPartialDate}?apiKey={apiKey}";
-let restaurantUrl = "";
+let travelUrl = "https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/autosuggest/v1.0/{country}/{currency}/{locale}/";
+let restaurantUrl = ""; //zomato
 // restaurant api key = 487b1cac0bd9dc6ad2bee4caa85af047;
 let timeUrl = "";
+//bring in a map with the coordinates passed into it?
+
 
 const goBtn = document.querySelector('button');
 const section = document.querySelector('section');
@@ -118,28 +120,31 @@ let weatherFetch = () => {
 }
 
 let displayWeather = (data) => {
-  // console.log(tempRow);
-  while (tempRow.firstChild) {
-    tempRow.removeChild(tempRow.firstChild); //1
+  console.log(data);
+  while (weatherDiv.firstChild) {
+    weatherDiv.removeChild(weatherDiv.firstChild); //1
   }
 
-  let errormessage = document.createElement('h1');
-  let weatherCard = document.createElement('div');
+  // let errormessage = document.createElement('h1');
+  // let weatherCard = document.createElement('div');
 
   if(data.cod == 404) {
     console.log("City is not in database")
-    // let errormessage = document.createElement('h1');
-    errormessage.innerHTML = data.message;
+    let errormessage = document.createElement('h1');
+    errormessage.innerHTML = 'This city is not in our database.';
+    errormessage.id = 'error';
 
-    weatherCard.appendChild(errormessage);
-    section.appendChild(weatherCard);
+    weatherDiv.appendChild(errormessage);
+    section.appendChild(weatherDiv);
 
   } else {
     console.log("WeatherResults", data); 
-    let tempInfo = data.main;
+    let tempInfo = data;
     // console.log(tempInfo);
 
+    // * Temperature Table
     let tempTable = document.createElement('table');
+    let tempTitle = document.createElement('h2');
     let tempHeaders = document.createElement('tr');
     let tempRow = document.createElement('tr');
     let highTemp = document.createElement('td'); 
@@ -149,14 +154,16 @@ let displayWeather = (data) => {
     let minTemp = document.createElement('th');
     let temp = document.createElement('th');
 
+    tempTitle.innerHTML = 'Temperature';
+    tempTitle.id = 'tempTitle';
     minTemp.innerHTML = 'Min Temp';
     maxTemp.innerHTML = 'Max Temp';
     temp.innerHTML = 'Current Temp';
     
     // fahrenheit conversion
-    let fLowTemp = ((tempInfo.temp_min-273.15)*1.8)+32;
-    let fHighTemp = ((tempInfo.temp_max-273.15)*1.8)+32;
-    let fCurrentTemp = ((tempInfo.temp-273.15)*1.8)+32;
+    let fLowTemp = ((tempInfo.main.temp_min-273.15)*1.8)+32;
+    let fHighTemp = ((tempInfo.main.temp_max-273.15)*1.8)+32;
+    let fCurrentTemp = ((tempInfo.main.temp-273.15)*1.8)+32;
 
     lowTemp.innerHTML = fLowTemp.toFixed()+'&degF';
     highTemp.innerHTML = fHighTemp.toFixed()+'&degF';
@@ -168,10 +175,32 @@ let displayWeather = (data) => {
     tempRow.appendChild(lowTemp);
     tempRow.appendChild(highTemp);
     tempRow.appendChild(currentTemp);
+    tempTable.appendChild(tempTitle);
     tempTable.appendChild(tempHeaders);
     tempTable.appendChild(tempRow);
-    weatherCard.appendChild(tempTable);
-    section.appendChild(weatherCard);
+    weatherDiv.appendChild(tempTable);
+    section.appendChild(weatherDiv);
+
+    // * Weather Card
+    let wCard = document.createElement('div');
+    wCard.id = 'wCard';
+    let wIcon = document.createElement('img');
+    wIcon.id = 'wIcon';
+    let descr = document.createElement('p');
+    let hum = document.createElement('p');
+
+    if(tempInfo.weather[0].icon != '') {
+      console.log(wIcon);
+      wIcon.src = 'http://openweathermap.org/img/w/' + tempInfo.weather[0].icon + '.png';
+    }
+    descr.innerHTML = tempInfo.weather[0].main;
+    hum.innerHTML = 'Humidity: ' + tempInfo.main.humidity + '%';
+
+    wCard.appendChild(wIcon);
+    wCard.appendChild(descr);
+    wCard.appendChild(hum);
+    weatherDiv.appendChild(wCard);
+    section.appendChild(weatherDiv);
   }
 }
 
