@@ -17,8 +17,7 @@ button{
   margin-top: 5em;
 }
 
-/* div{
-  display: flex;
-  align-content: center;
-  justify-content: center;
-} */
+section{
+  display: block;
+  text-align: center;
+}
