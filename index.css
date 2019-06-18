@@ -40,13 +40,14 @@ th{
 }
 
 td{
-  padding: 0 2em 2em 2em;
+  padding: 0 2em 1.5em 2em;
 }
 
 #tempTitle {
   /* display: flex; */
   text-align: center;
   margin-left: 1em;
+  float: left;
 }
 
 #weather {
@@ -69,4 +70,19 @@ td{
   border: 1px solid black;
   border-radius: 2.5em;
   font-family: sans-serif;
+}
+
+#convertbtn{
+  padding: 1em;
+  margin: 2em 0 0 2em;
+  width: 6em;
+  height: auto;
+  float: right;
+  /* position: relative;
+  right: 0; */
+}
+
+#tempDiv{
+  position: relative;
+  display: inline;
 }

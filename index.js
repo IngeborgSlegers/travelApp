@@ -138,6 +138,7 @@ async function displayWeather(data) {
 
     // * Temperature Table
     let tempTable = document.createElement('table');
+    let tempDiv = document.createElement('div');
     let tempTitle = document.createElement('h2');
     let tempHeaders = document.createElement('tr');
     let tempRow = document.createElement('tr');
@@ -149,6 +150,7 @@ async function displayWeather(data) {
     let temp = document.createElement('th');
     let convert = document.createElement('button');
 
+    tempDiv.id = 'tempDiv';
     tempTitle.innerHTML = 'Temperature';
     tempTitle.id = 'tempTitle';
     minTemp.innerHTML = 'Min Temp';
@@ -157,17 +159,17 @@ async function displayWeather(data) {
     convert.id = 'convertbtn';
     convert.innerHTML = 'Celsius';
     
+    let fCurrentTemp = tempInfo.main.temp;
     let fLowTemp = tempInfo.main.temp_min;
     let fHighTemp = tempInfo.main.temp_max;
-    let fCurrentTemp = tempInfo.main.temp;
 
+    fCurrentTemp = ((fCurrentTemp-273.15)*1.8)+32;
     fLowTemp = ((fLowTemp-273.15)*1.8)+32;
     fHighTemp = ((fHighTemp-273.15)*1.8)+32;
-    fCurrentTemp = ((fCurrentTemp-273.15)*1.8)+32;
 
-    highTemp.innerHTML = fLowTemp.toFixed()+'&degF';
-    lowTemp.innerHTML = fHighTemp.toFixed()+'&degF';
     currentTemp.innerHTML = fCurrentTemp.toFixed()+'&degF';
+    highTemp.innerHTML = fHighTemp.toFixed()+'&degF';
+    lowTemp.innerHTML = fLowTemp.toFixed()+'&degF';
 
     let convertDeg = (e) => {
       console.log('convert button has been pushed!', e)
@@ -176,39 +178,40 @@ async function displayWeather(data) {
         console.log('in the 1st if')
         // celsius conversion
         console.log('1', fLowTemp, fHighTemp, fCurrentTemp);
+        fCurrentTemp = (fCurrentTemp-32)/1.8;
         fLowTemp = (fLowTemp-32)/1.8;
         fHighTemp = (fHighTemp-32)/1.8;
-        fCurrentTemp = (fCurrentTemp-32)/1.8;
     
+        currentTemp.innerHTML = fCurrentTemp.toFixed()+'&degC';
         lowTemp.innerHTML = fLowTemp.toFixed()+'&degC';
         highTemp.innerHTML = fHighTemp.toFixed()+'&degC';
-        currentTemp.innerHTML = fCurrentTemp.toFixed()+'&degC';
 
         convert.innerHTML = 'Fahrenheit';
       } else if (convert.innerHTML == 'Fahrenheit') {
         console.log('In the 2nd if');
         console.log('1', fLowTemp, fHighTemp, fCurrentTemp);
+        fCurrentTemp = ((fCurrentTemp*1.8)+32);
         fLowTemp = ((fLowTemp*1.8)+32);
         fHighTemp = ((fHighTemp*1.8)+32);
-        fCurrentTemp = ((fCurrentTemp*1.8)+32);
         console.log('2', fLowTemp, fHighTemp, fCurrentTemp)
     
-        highTemp.innerHTML = fLowTemp.toFixed()+'&degF';
-        lowTemp.innerHTML = fHighTemp.toFixed()+'&degF';
         currentTemp.innerHTML = fCurrentTemp.toFixed()+'&degF';
+        highTemp.innerHTML = fHighTemp.toFixed()+'&degF';
+        lowTemp.innerHTML = fLowTemp.toFixed()+'&degF';
     
         convert.innerHTML = 'Celsius';
       }
     }
     
+    tempHeaders.appendChild(temp);
     tempHeaders.appendChild(minTemp);
     tempHeaders.appendChild(maxTemp);
-    tempHeaders.appendChild(temp);
+    tempRow.appendChild(currentTemp);
     tempRow.appendChild(lowTemp);
     tempRow.appendChild(highTemp);
-    tempRow.appendChild(currentTemp);
-    tempRow.appendChild(convert);
-    tempTable.appendChild(tempTitle);
+    tempDiv.appendChild(tempTitle);
+    tempDiv.appendChild(convert);
+    tempTable.appendChild(tempDiv);
     tempTable.appendChild(tempHeaders);
     tempTable.appendChild(tempRow);
     weatherDiv.appendChild(tempTable);
