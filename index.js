@@ -42,6 +42,10 @@ let cityFetch = (e) => {
     .then((data) => {
       weatherFetch(data)
     })
+    .then(() => {
+      console.log('Im here!');
+      flightFetch();
+    })
 }
 
 // ? Display my random city and country
@@ -241,5 +245,38 @@ async function displayWeather(data) {
     convert.addEventListener('click', convertDeg);
   }
 }
+
+let flightFetch = () => {
+  console.log(`I've hit flightFetch`);
+  fetch('https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/browsequotes/v1.0/US/USD/en-US/SFO/JFK/2019-09-01', {
+    headers: new Headers({
+      // "X-RapidAPI-Host": "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
+      'X-RapidAPI-Key': 'cd2504da29msh8320057dd046b54p15d1a6jsn08a7a1bdf7a1'
+    })
+  })
+  .then(
+    (response) => {
+      console.log(response);
+      return response.json();
+    })
+  .then(
+    (jsondata) => {
+    console.log(jsondata);
+  })
+}
+
+function getLocation() {
+  if (navigator.geolocation) {
+    console.log(navigator.geolocation.getCurrentPosition(showPosition));
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+  console.log("Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude);
+}
+
+getLocation();
 
 goBtn.addEventListener('click', cityFetch);
