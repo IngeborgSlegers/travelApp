@@ -1,10 +1,10 @@
 body{
-  font-family: sans-serif;
+  font-family: 'Livvic', sans-serif;
 }
 
 h1{
   text-align: center;
-  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-family: 'Livvic', sans-serif;
 }
 
 button{
@@ -16,6 +16,7 @@ button{
   height: 5em;
   width: 10em;
   border-radius: 5em;
+  font-family: 'Livvic', sans-serif;
 }
 
 .travel{
@@ -33,6 +34,7 @@ table{
   border-radius: 2.5em;
   text-align: center;
   height: 75%;
+  box-shadow: 10px 5px 5px gainsboro;
 }
 
 th{
@@ -54,6 +56,7 @@ td{
   display: flex;
   justify-content: space-around; 
   /* align-content: space-around; */
+  /* box-shadow: 10px 5px 5px gainsboro; */
 }
 
 #wCard {
@@ -61,6 +64,7 @@ td{
   padding: 1em;
   border: 1px solid black;
   border-radius: 2.5em;
+  box-shadow: 10px 5px 5px gainsboro;
   height: auto;
 }
 
@@ -85,4 +89,13 @@ td{
 #tempDiv{
   position: relative;
   display: inline;
+}
+
+.airCard{
+  border: 1px solid black;
+  border-radius: 2.5em;
+  box-shadow: 10px 5px 5px gainsboro;
+  width: 30%;
+  display: inline-block;
+  margin: 2em;
 }
