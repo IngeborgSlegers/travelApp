@@ -322,6 +322,8 @@ let displayAirport = (json) => {
     // airCard.style.display = 'inline-block';
     
     section.appendChild(airCard);
+
+    airCard.addEventListener('click', flightFetch);
   })
   /*
   ICAO (International Civil Aviation Organization) is a UN-body which focusses on international harmonization of civil aviation regulations. ICAO codes are used for "official" purposes such as Air Traffic Control; E.g. flight plans use ICAO codes for airports and airline flight identification.
@@ -347,6 +349,6 @@ function showPosition(position) {
   return userLat, userLon;
 }
 
-// getLocation();
+getLocation();
 
 goBtn.addEventListener('click', cityFetch);
